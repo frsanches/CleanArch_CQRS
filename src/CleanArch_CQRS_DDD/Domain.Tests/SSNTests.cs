@@ -8,7 +8,7 @@ namespace Domain.Tests
         public void SSN_Instantiation_ShouldReturnObjectInstance()
         {
             var value = "416-27-7825";
-
+            
             var ssn = new SSN(value);
 
             Assert.IsType<SSN>(ssn);

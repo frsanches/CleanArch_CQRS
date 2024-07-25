@@ -9,9 +9,9 @@ namespace Domain.Tests
         {
             var (customerId, initialAmmount) = Init();
 
-            var bankAccount = BankAcount.Create(customerId, initialAmmount);
+            var bankAccount = BankAccount.Create(customerId, initialAmmount);
 
-            Assert.IsType<BankAcount>(bankAccount);
+            Assert.IsType<BankAccount>(bankAccount);
             Assert.Equal(initialAmmount, bankAccount.Balance);
             Assert.Equal(customerId, bankAccount.CustomerId);
         }
@@ -22,7 +22,7 @@ namespace Domain.Tests
             var custormerId = Guid.NewGuid();
             var initialAmmount = 5;
 
-            Assert.Throws<InvalidOperationException>(() => BankAcount.Create(custormerId, initialAmmount));
+            Assert.Throws<InvalidOperationException>(() => BankAccount.Create(custormerId, initialAmmount));
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Domain.Tests
         {
             var (customerId, initialAmmount) = Init();
 
-            var bankAccount = BankAcount.Create(customerId, initialAmmount);
+            var bankAccount = BankAccount.Create(customerId, initialAmmount);
             bankAccount.Deposit(100);
 
 
@@ -44,7 +44,7 @@ namespace Domain.Tests
         {
             var (customerId, initialAmmount) = Init();
 
-            var bankAccount = BankAcount.Create(customerId, initialAmmount);
+            var bankAccount = BankAccount.Create(customerId, initialAmmount);
 
             var ex = Assert.Throws<InvalidOperationException>(() => bankAccount.Deposit(amount));
         }
@@ -54,7 +54,7 @@ namespace Domain.Tests
         {
             var (customerId, initialAmmount) = Init();
 
-            var bankAccount = BankAcount.Create(customerId, initialAmmount);
+            var bankAccount = BankAccount.Create(customerId, initialAmmount);
             bankAccount.Withdraw(10);
 
 
@@ -66,7 +66,7 @@ namespace Domain.Tests
         {
             var (customerId, initialAmmount) = Init();
 
-            var bankAccount = BankAcount.Create(customerId, initialAmmount);
+            var bankAccount = BankAccount.Create(customerId, initialAmmount);
 
             Assert.Throws<InvalidOperationException>(() => bankAccount.Withdraw(30));
         }
@@ -76,7 +76,7 @@ namespace Domain.Tests
         {
             var (customerId, initialAmmount) = Init();
 
-            var bankAccount = BankAcount.Create(customerId, initialAmmount);
+            var bankAccount = BankAccount.Create(customerId, initialAmmount);
             bankAccount.Deposit(100);
 
 
@@ -90,7 +90,7 @@ namespace Domain.Tests
         {
             var (customerId, initialAmmount) = Init();
 
-            var bankAccount = BankAcount.Create(customerId, initialAmmount);
+            var bankAccount = BankAccount.Create(customerId, initialAmmount);
             bankAccount.Withdraw(10);
 
 

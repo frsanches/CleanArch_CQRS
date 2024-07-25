@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Entities.Accounts
 {
-    public class BankAcount : IEntity
+    public class BankAccount : IEntity
     {
         private readonly List<ITransaction> _transactions = new List<ITransaction>();
         public Guid Id { get; private set; }
@@ -10,7 +10,7 @@ namespace Core.Domain.Entities.Accounts
         public double Balance { get; set; }
         public IReadOnlyList<ITransaction> Transactions => _transactions.ToList();
 
-        private BankAcount(Guid customerId, double amount)
+        private BankAccount(Guid customerId, double amount)
         {
             Id = Guid.NewGuid();
             CustomerId = customerId;
@@ -27,7 +27,7 @@ namespace Core.Domain.Entities.Accounts
         public void Deposit(double amount)
         {
             if (amount <= 0)
-                throw new InvalidOperationException("The amount should be superior to 0 balance.");
+                throw new InvalidOperationException("The amount should be superior to 0.");
 
             Balance += amount;
 
@@ -44,14 +44,14 @@ namespace Core.Domain.Entities.Accounts
             _transactions.Add(new DebitTransaction(Id, amount));
         }
 
-        public static BankAcount Create(Guid customerId, double amount)
+        public static BankAccount Create(Guid customerId, double amount)
         {
             ArgumentNullException.ThrowIfNull(customerId, nameof(customerId));
 
             if (amount < 10)
                 throw new InvalidOperationException("You should deposit minimun 10$ to create an account.");
 
-            return new BankAcount(customerId, amount);
+            return new BankAccount(customerId, amount);
         }
     }
 }
