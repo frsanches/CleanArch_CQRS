@@ -19,9 +19,10 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(b => b.Description)
                .HasMaxLength(50).IsRequired();
 
-            builder.HasOne<BankAccountTable>()
+            builder.HasOne(p => p.BankAccount)
                 .WithMany(p => p.DebitTransactions)
-                .HasForeignKey(p => p.DebitTransactionId);
+                .HasForeignKey(p => p.BankAccountId)
+                .IsRequired();
         }
     }
 }

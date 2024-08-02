@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Persistence.Entities;
+using Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -15,6 +16,8 @@ namespace Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+            modelBuilder.SeedData();
         }
     }
 }

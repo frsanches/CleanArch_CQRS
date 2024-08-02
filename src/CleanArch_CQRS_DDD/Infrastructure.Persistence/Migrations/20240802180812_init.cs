@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,12 +62,6 @@ namespace Infrastructure.Persistence.Migrations
                         principalTable: "BankAccount",
                         principalColumn: "BankAccountId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CreditTransaction_BankAccount_CreditTransactionId",
-                        column: x => x.CreditTransactionId,
-                        principalTable: "BankAccount",
-                        principalColumn: "BankAccountId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,12 +79,6 @@ namespace Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_DebitTransaction_BankAccount_BankAccountId",
                         column: x => x.BankAccountId,
-                        principalTable: "BankAccount",
-                        principalColumn: "BankAccountId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DebitTransaction_BankAccount_DebitTransactionId",
-                        column: x => x.DebitTransactionId,
                         principalTable: "BankAccount",
                         principalColumn: "BankAccountId",
                         onDelete: ReferentialAction.Cascade);

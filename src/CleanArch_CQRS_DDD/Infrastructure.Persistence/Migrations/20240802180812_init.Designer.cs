@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240725163336_initial")]
-    partial class initial
+    [Migration("20240802180812_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,14 +123,8 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Infrastructure.Persistence.Entities.CreditTransactionTable", b =>
                 {
                     b.HasOne("Infrastructure.Persistence.Entities.BankAccountTable", "BankAccount")
-                        .WithMany()
-                        .HasForeignKey("BankAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Infrastructure.Persistence.Entities.BankAccountTable", null)
                         .WithMany("CreditTransactions")
-                        .HasForeignKey("CreditTransactionId")
+                        .HasForeignKey("BankAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -140,14 +134,8 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Infrastructure.Persistence.Entities.DebitTransactionTable", b =>
                 {
                     b.HasOne("Infrastructure.Persistence.Entities.BankAccountTable", "BankAccount")
-                        .WithMany()
-                        .HasForeignKey("BankAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Infrastructure.Persistence.Entities.BankAccountTable", null)
                         .WithMany("DebitTransactions")
-                        .HasForeignKey("DebitTransactionId")
+                        .HasForeignKey("BankAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
