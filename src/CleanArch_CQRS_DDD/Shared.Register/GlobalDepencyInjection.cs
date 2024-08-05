@@ -1,4 +1,4 @@
-﻿using Infrastructure.Persistence;
+﻿using Banking.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
