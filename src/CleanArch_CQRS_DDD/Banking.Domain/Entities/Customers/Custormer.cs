@@ -1,4 +1,6 @@
-﻿namespace Banking.Domain.Entities.Customers
+﻿using System.Runtime.Intrinsics.X86;
+
+namespace Banking.Domain.Entities.Customers
 {
     public class Custormer : IEntity
     {
@@ -10,6 +12,16 @@
 
         private Custormer(string firstName, string lastName, string email, SSN ssn)
         {
+            Id = Guid.NewGuid();
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            SSN = ssn;
+        }
+
+        private Custormer(Guid customerId, string firstName, string lastName, string email, SSN ssn) 
+        {
+            Id = customerId;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
@@ -24,6 +36,17 @@
             if (string.IsNullOrWhiteSpace(ssn)) throw new ArgumentNullException(nameof(ssn));
 
             return new Custormer(firstName, lastName, email, new SSN(ssn));
+        }
+
+        public static Custormer FromDB(Guid customerId, string firstName, string lastName, string email, string ssn)
+        {
+            ArgumentNullException.ThrowIfNull(customerId, nameof(customerId));
+            if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentNullException(nameof(firstName));
+            if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentNullException(nameof(lastName));
+            if (string.IsNullOrWhiteSpace(email)) throw new ArgumentNullException(nameof(email));
+            if (string.IsNullOrWhiteSpace(ssn)) throw new ArgumentNullException(nameof(ssn));
+
+            return new Custormer(customerId, firstName, lastName, email, new SSN(ssn));
         }
     }
 }

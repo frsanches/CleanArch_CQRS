@@ -19,6 +19,14 @@ namespace Banking.Domain.Entities.Accounts
             _transactions.Add(new CreditTransaction(Id, amount));
         }
 
+        private BankAccount(Guid bankAccountId, Guid customerId, double balance) 
+        {
+            Id = bankAccountId;
+            CustomerId = customerId;
+            Balance = balance;
+            _transactions = new List<ITransaction>();
+        }
+
         public ITransaction GetMostRecentTransaction
         {
             get { return _transactions.Last(); }
@@ -52,6 +60,15 @@ namespace Banking.Domain.Entities.Accounts
                 throw new InvalidOperationException("You should deposit minimun 10$ to create an account.");
 
             return new BankAccount(customerId, amount);
+        }
+
+        public static BankAccount FromDb(Guid bankAccountId, Guid customerId, double balance)
+        {
+            ArgumentNullException.ThrowIfNull(customerId, nameof(bankAccountId));
+            ArgumentNullException.ThrowIfNull(customerId, nameof(customerId));
+            ArgumentNullException.ThrowIfNull(customerId, nameof(balance));
+
+            return new BankAccount(bankAccountId, customerId, balance);
         }
     }
 }

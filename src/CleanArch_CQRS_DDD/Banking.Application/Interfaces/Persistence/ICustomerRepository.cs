@@ -4,8 +4,8 @@ namespace Banking.Application.Interfaces
 {
     public interface ICustomerRepository
     {
-        Task Add(Custormer custormer);
+        Task AddAsync(Custormer custormer);
 
-        Task<Custormer> GetByIdAsync(Guid id, bool includeTransactions);
+        Task<Custormer?> GetByIdAsync(Guid id, bool includeTransactions);
     }
 }

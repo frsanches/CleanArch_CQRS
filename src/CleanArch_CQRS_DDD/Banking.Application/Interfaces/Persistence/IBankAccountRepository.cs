@@ -4,8 +4,8 @@ namespace Banking.Application.Interfaces
 {
     public interface IBankAccountRepository
     {
-        Task Add(BankAccount bankAcount);
+        Task AddAsync(BankAccount bankAcount);
 
-        Task<BankAccount> GetByIdAsync(Guid id);
+        Task<BankAccount?> GetByIdAsync(Guid id);
     }
 }
