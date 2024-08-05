@@ -1,4 +1,4 @@
-﻿using Core.Domain.Entities.Customers;
+﻿using Banking.Domain.Entities.Customers;
 
 namespace Domain.Tests
 {
