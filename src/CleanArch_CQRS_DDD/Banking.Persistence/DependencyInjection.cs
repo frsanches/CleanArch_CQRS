@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Banking.Application.Interfaces;
+using Banking.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,8 @@ namespace Banking.Persistence
             {
                 options.UseSqlite(configuration.GetConnectionString("Database"));
             });
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             return services;
         }

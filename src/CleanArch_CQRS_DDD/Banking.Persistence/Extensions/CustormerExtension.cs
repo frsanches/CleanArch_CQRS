@@ -17,7 +17,8 @@ namespace Banking.Persistence.Extensions
                 CustomerId = customer.Id,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
-                Email = customer.Email
+                Email = customer.Email,
+                SSN = customer.SSN.Value
             };
         }
 

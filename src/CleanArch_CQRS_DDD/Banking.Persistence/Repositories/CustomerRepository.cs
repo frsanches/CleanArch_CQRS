@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Banking.Persistence.Repositories
 {
-    internal abstract class CustomerRepository : ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        protected CustomerRepository(ApplicationDbContext dbContext)
+        public CustomerRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
