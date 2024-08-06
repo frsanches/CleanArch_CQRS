@@ -1,4 +1,5 @@
 ﻿using Banking.Domain.Entities.Accounts;
+using Banking.Domain.Entities.Customers;
 
 namespace Domain.Tests
 {
@@ -12,6 +13,7 @@ namespace Domain.Tests
             var bankAccount = BankAccount.Create(customerId, initialAmmount);
 
             Assert.IsType<BankAccount>(bankAccount);
+            Assert.NotEmpty(bankAccount.Id.ToString());
             Assert.Equal(initialAmmount, bankAccount.Balance);
             Assert.Equal(customerId, bankAccount.CustomerId);
         }

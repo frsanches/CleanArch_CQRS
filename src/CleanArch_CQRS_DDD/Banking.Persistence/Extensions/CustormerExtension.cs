@@ -23,7 +23,12 @@ namespace Banking.Persistence.Extensions
 
         internal static Custormer Convert(this CustomerTable customer)
         {
-            return Custormer.FromDB(customer.CustomerId, customer.FirstName, customer.LastName, customer.Email, "ssn");
+            return Custormer.FromDB(
+                customer.CustomerId,
+                customer.FirstName,
+                customer.LastName,
+                customer.Email,
+                customer.SSN);
         }
     }
 }

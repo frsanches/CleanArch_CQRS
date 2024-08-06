@@ -17,7 +17,8 @@ namespace Banking.Persistence.Extensions
                     CustomerId = customerId,
                     FirstName = "John",
                     LastName = "Doe",
-                    Email = "john.doe@banking.com"
+                    Email = "john.doe@banking.com",
+                    SSN = "545-40-9491"
                 });
 
             modelBuilder.Entity<BankAccountTable>().HasData(

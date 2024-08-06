@@ -21,6 +21,9 @@ namespace Banking.Persistence.Configurations
 
             builder.Property(b => b.Email)
                 .HasMaxLength(50).IsRequired();
+
+            builder.Property(b => b.SSN)
+                .HasMaxLength(11).IsRequired();
         }
     }
 }

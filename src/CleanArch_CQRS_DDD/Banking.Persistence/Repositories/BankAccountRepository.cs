@@ -2,11 +2,7 @@
 using Banking.Domain.Entities.Accounts;
 using Banking.Domain.Entities.Transactions;
 using Banking.Persistence.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Banking.Persistence.Repositories
 {

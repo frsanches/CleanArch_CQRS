@@ -15,6 +15,7 @@ namespace Domain.Tests
             var custormer = Custormer.Create(firstName, lastName, email, ssn);
 
             Assert.IsType<Custormer>(custormer);
+            Assert.NotEmpty(custormer.Id.ToString());
             Assert.Equal(firstName, custormer.FirstName);
             Assert.Equal(lastName, custormer.LastName);
             Assert.Equal(email, custormer.Email);
