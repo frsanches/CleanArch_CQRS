@@ -6,7 +6,10 @@ namespace Banking.Persistence
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
+        {
+            this.ChangeTracker.LazyLoadingEnabled = false; 
+        }
 
         internal DbSet<CustomerTable> Customers { get; set; }
         internal DbSet<BankAccountTable> BankAccount { get; set; }

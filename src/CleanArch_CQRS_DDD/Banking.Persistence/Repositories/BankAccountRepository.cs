@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Banking.Persistence.Repositories
 {
-    internal abstract class BankAccountRepository : IBankAccountRepository
+    public class BankAccountRepository : IBankAccountRepository
     {
         private readonly ApplicationDbContext _DbContext;
 
-        protected BankAccountRepository(ApplicationDbContext dbContext)
+        public BankAccountRepository(ApplicationDbContext dbContext)
         {
             _DbContext = dbContext;
         }

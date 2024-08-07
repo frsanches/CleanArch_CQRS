@@ -25,7 +25,7 @@ namespace Banking.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Custormer?> GetByIdAsync(Guid id, bool includeTransactions)
+        public async Task<Custormer?> GetByIdAsync(Guid id)
         {
             var dbCustomer = await _dbContext.Customers.FindAsync(id);
 

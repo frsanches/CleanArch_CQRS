@@ -7,7 +7,7 @@
         public Guid CustomerId { get; set; }
         public CustomerTable Customer { get; set; }
         public double Balance { get; set; }
-        public ICollection<CreditTransactionTable> CreditTransactions { get; set; }
-        public ICollection<DebitTransactionTable> DebitTransactions { get; set; }
+        public ICollection<CreditTransactionTable> CreditTransactions { get; set; } = new List<CreditTransactionTable>();
+        public ICollection<DebitTransactionTable> DebitTransactions { get; set; } =  new List<DebitTransactionTable>();
     }
 }

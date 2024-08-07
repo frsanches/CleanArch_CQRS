@@ -1,4 +1,5 @@
 ﻿using Banking.Domain.Entities.Customers;
+using Banking.Persistence.Entities;
 using Banking.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,41 @@ namespace Banking.Persistence.IntegrationTests
             var dbCustomer = _dbContext.Customers.Find(custormer.Id);
 
             Assert.Equal(dbCustomer?.CustomerId, custormer.Id);
+        }
+
+        [Fact]
+        public async Task Should_GetCustomerById_WhenCustomerExists()
+        {
+            // Arrange
+            var firstName = "John";
+            var lastName = "Doe";
+            var email = "john.doe@bank.com";
+            var ssn = "416-27-7825";
+
+            var customer = new CustomerTable
+            {
+                CustomerId = Guid.NewGuid(),
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                SSN = ssn
+            };
+
+            _dbContext.Customers.Add(customer);
+            _dbContext.SaveChanges();
+
+            var customerRepository = new CustomerRepository(_dbContext);
+
+            //act
+            var expectedCustomer = await customerRepository.GetByIdAsync(customer.CustomerId);
+
+            //assert
+            Assert.NotNull(expectedCustomer);
+            Assert.Equal(expectedCustomer.Id, customer.CustomerId);
+            Assert.Equal(expectedCustomer.FirstName, firstName);
+            Assert.Equal(expectedCustomer.LastName, lastName);
+            Assert.Equal(expectedCustomer.Email, email);
+            Assert.Equal(expectedCustomer.SSN.Value, ssn);
         }
     }
 }

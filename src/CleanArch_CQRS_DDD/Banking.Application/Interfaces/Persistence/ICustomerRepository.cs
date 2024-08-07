@@ -6,6 +6,6 @@ namespace Banking.Application.Interfaces
     {
         Task AddAsync(Custormer custormer);
 
-        Task<Custormer?> GetByIdAsync(Guid id, bool includeTransactions);
+        Task<Custormer?> GetByIdAsync(Guid id);
     }
 }
