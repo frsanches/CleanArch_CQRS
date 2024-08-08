@@ -1,4 +1,5 @@
 ﻿using Banking.Domain.Entities.Customers;
+using System.Net;
 
 namespace Domain.Tests
 {
@@ -12,14 +13,15 @@ namespace Domain.Tests
             var email = "john.doe@bank.com";
             var ssn = "416-27-7825";
 
-            var custormer = Custormer.Create(firstName, lastName, email, ssn);
+            var custormer = Customer.Create(firstName, lastName, email, ssn);
 
-            Assert.IsType<Custormer>(custormer);
-            Assert.NotEmpty(custormer.Id.ToString());
-            Assert.Equal(firstName, custormer.FirstName);
-            Assert.Equal(lastName, custormer.LastName);
-            Assert.Equal(email, custormer.Email);
-            Assert.Equal(ssn, custormer.SSN.Value);
+            Assert.True(custormer.IsSuccess);
+            Assert.IsType<Customer>(custormer.Value);
+            Assert.NotEmpty(custormer.Value.Id.ToString());
+            Assert.Equal(firstName, custormer.Value.FirstName);
+            Assert.Equal(lastName, custormer.Value.LastName);
+            Assert.Equal(email, custormer.Value.Email);
+            Assert.Equal(ssn, custormer.Value.SSN.Value);
         }
 
         [Theory]
@@ -29,7 +31,11 @@ namespace Domain.Tests
         [InlineData("John", "Doe", "john.doe@bank.com", "")]
         public void Customer_Create_ShouldThrowAnException(string firstName, string lastName, string email, string ssn)
         {
-            Assert.Throws<ArgumentNullException>(() => Custormer.Create(firstName, lastName, email, ssn));
+            var customer = Customer.Create(firstName, lastName, email, ssn);
+
+            Assert.False(customer.IsSuccess);
+            Assert.NotEmpty(customer.Error!.message);
+            Assert.Equal(HttpStatusCode.BadRequest, customer.Error.statuscode);
         }
     }
 }

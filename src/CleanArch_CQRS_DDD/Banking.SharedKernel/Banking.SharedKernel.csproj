@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Banking.SharedKernel\Banking.SharedKernel.csproj" />
-  </ItemGroup>
-
 </Project>

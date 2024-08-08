@@ -28,15 +28,15 @@ namespace Banking.Persistence.IntegrationTests
             var email = "john.doe@bank.com";
             var ssn = "416-27-7825";
 
-            var custormer = Custormer.Create(firstName, lastName, email, ssn);
+            var custormer = Customer.Create(firstName, lastName, email, ssn);
             var customerRepository = new CustomerRepository(_dbContext);
 
             // Act
-            await customerRepository.AddAsync(custormer);
+            await customerRepository.AddAsync(custormer.Value!);
 
-            var dbCustomer = _dbContext.Customers.Find(custormer.Id);
+            var dbCustomer = _dbContext.Customers.Find(custormer.Value!.Id);
 
-            Assert.Equal(dbCustomer?.CustomerId, custormer.Id);
+            Assert.Equal(dbCustomer?.CustomerId, custormer.Value!.Id);
         }
 
         [Fact]

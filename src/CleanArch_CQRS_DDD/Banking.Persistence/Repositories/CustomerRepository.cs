@@ -18,14 +18,14 @@ namespace Banking.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Custormer custormer)
+        public async Task AddAsync(Customer customer)
         {
-            _dbContext.Customers.Add(custormer.Convert());
+            _dbContext.Customers.Add(customer.Convert());
 
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Custormer?> GetByIdAsync(Guid id)
+        public async Task<Customer?> GetByIdAsync(Guid id)
         {
             var dbCustomer = await _dbContext.Customers.FindAsync(id);
 

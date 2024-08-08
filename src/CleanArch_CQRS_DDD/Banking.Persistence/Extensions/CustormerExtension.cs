@@ -10,7 +10,7 @@ namespace Banking.Persistence.Extensions
 {
     internal static class CustormerExtension
     {
-        internal static CustomerTable Convert(this Custormer customer)
+        internal static CustomerTable Convert(this Customer customer)
         {
             return new()
             {
@@ -22,9 +22,9 @@ namespace Banking.Persistence.Extensions
             };
         }
 
-        internal static Custormer Convert(this CustomerTable customer)
+        internal static Customer Convert(this CustomerTable customer)
         {
-            return Custormer.FromDB(
+            return Customer.FromDB(
                 customer.CustomerId,
                 customer.FirstName,
                 customer.LastName,
