@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.Persistence", "Bank
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.Persistence.IntegrationTests", "Banking.Persistence.IntegrationTests\Banking.Persistence.IntegrationTests.csproj", "{AFD62D57-2B4A-4D93-8659-E2E908BD6867}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.SharedKernel", "Banking.SharedKernel\Banking.SharedKernel.csproj", "{D36D458E-4455-4A93-88CF-4D00D669568D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{AFD62D57-2B4A-4D93-8659-E2E908BD6867}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFD62D57-2B4A-4D93-8659-E2E908BD6867}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFD62D57-2B4A-4D93-8659-E2E908BD6867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D36D458E-4455-4A93-88CF-4D00D669568D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36D458E-4455-4A93-88CF-4D00D669568D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36D458E-4455-4A93-88CF-4D00D669568D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36D458E-4455-4A93-88CF-4D00D669568D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{36848DF8-26D7-49D0-AFB1-FACEC6439F5C} = {7E76651B-895D-4A26-8449-64A31E396EC7}
 		{98750C5C-225F-4190-8729-FF6629FCB4EC} = {F8DB60A1-C8CD-43EB-9C6F-0F532DAAFA8F}
 		{AFD62D57-2B4A-4D93-8659-E2E908BD6867} = {1280D5FE-DA1C-4D00-A37D-58A5F9BC9936}
+		{D36D458E-4455-4A93-88CF-4D00D669568D} = {0AA30E49-AF51-4FAF-B9B7-59B2871A84AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A2F72A4-EA2A-44AF-8C2B-ED1E159C9FEC}
