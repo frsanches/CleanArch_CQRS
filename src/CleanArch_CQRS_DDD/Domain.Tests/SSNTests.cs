@@ -1,4 +1,5 @@
 ﻿using Banking.Domain.Entities.Customers;
+using Banking.SharedKernel.Error;
 
 namespace Domain.Tests
 {
@@ -9,10 +10,10 @@ namespace Domain.Tests
         {
             var value = "416-27-7825";
             
-            var ssn = new SSN(value);
+            var ssn = SSN.Create(value);
 
-            Assert.IsType<SSN>(ssn);
-            Assert.Equal(value, ssn.Value);
+            Assert.IsType<SSN>(ssn.Value);
+            Assert.Equal(value, ssn.Value.Value);
         }
 
         [Theory]
@@ -20,7 +21,11 @@ namespace Domain.Tests
         [InlineData("")]
         public void SSN_Instantiation_ShouldThrowAnException(string value)
         {
-            Assert.Throws<ArgumentException>(() => new SSN(value));
+            var ssn = SSN.Create(value);
+
+            Assert.False(ssn.IsSuccess);
+            Assert.IsType<Error>(ssn.Error);
+            Assert.NotEmpty(ssn.Error.message);
         }
     }
 }

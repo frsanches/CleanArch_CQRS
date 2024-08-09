@@ -3,6 +3,6 @@
     public interface ICommandHandler<TCommand, TResult>
         where TCommand : ICommand
     {
-        TResult Execute(TCommand command);
+        Task<TResult> HandleAsync(TCommand command);
     }
 }

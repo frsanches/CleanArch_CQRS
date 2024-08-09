@@ -37,19 +37,18 @@ namespace Banking.Domain.Entities.Customers
             if (string.IsNullOrWhiteSpace(lastName)) return ValidationError.ParameterError(nameof(lastName));
             if (string.IsNullOrWhiteSpace(email)) return ValidationError.ParameterError(nameof(email));
             if (string.IsNullOrWhiteSpace(ssn)) return ValidationError.ParameterError(nameof(ssn));
+            
+            var newSsn = SSN.Create(ssn);
 
-            return new Customer(firstName, lastName, email, new SSN(ssn));
+            if (!newSsn.IsSuccess)
+                return newSsn.Error!;
+
+            return new Customer(firstName, lastName, email, newSsn.Value);
         }
 
         public static Customer FromDB(Guid customerId, string firstName, string lastName, string email, string ssn)
         {
-            ArgumentNullException.ThrowIfNull(customerId, nameof(customerId));
-            if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentNullException(nameof(firstName));
-            if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentNullException(nameof(lastName));
-            if (string.IsNullOrWhiteSpace(email)) throw new ArgumentNullException(nameof(email));
-            if (string.IsNullOrWhiteSpace(ssn)) throw new ArgumentNullException(nameof(ssn));
-
-            return new Customer(customerId, firstName, lastName, email, new SSN(ssn));
+            return new Customer(customerId, firstName, lastName, email, SSN.FromDB(ssn));
         }
     }
 }

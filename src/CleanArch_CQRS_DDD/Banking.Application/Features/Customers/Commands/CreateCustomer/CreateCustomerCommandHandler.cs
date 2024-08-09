@@ -16,7 +16,7 @@ namespace Banking.Application.Features.Customers.Commands.CreateCustomer
             _customerRepository = customerRepository;
         }
 
-        public Result<CreateCustomerResponse, Error> Execute(CreateCustomerCommand command)
+        public async Task<Result<CreateCustomerResponse, Error>> HandleAsync(CreateCustomerCommand command)
         {
             // TODO : command validation using fluentvalidation
 
@@ -26,7 +26,10 @@ namespace Banking.Application.Features.Customers.Commands.CreateCustomer
                 command.Email,
                 command.SSN);
 
-            _customerRepository.AddAsync(customer.Value!);
+            if (!customer.IsSuccess) 
+                return customer.Error!;
+
+            await _customerRepository.AddAsync(customer.Value!);
 
             return customer.Value!.Convert();
         }

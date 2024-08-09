@@ -1,18 +1,31 @@
-﻿using System.Text.RegularExpressions;
+﻿using Banking.Domain.Errors;
+using Banking.SharedKernel.Error;
+using Banking.SharedKernel.Response;
+using System.Text.RegularExpressions;
 
 namespace Banking.Domain.Entities.Customers
 {
-    public record SSN
+    public record struct SSN
     {
-        readonly string ssnPattern = @"^\d{3}-\d{2}-\d{4}$";
+        const string ssnPattern = @"^\d{3}-\d{2}-\d{4}$";
         public string Value { get; private set; }
 
-        public SSN(string ssn)
+        private SSN(string ssn)
+        {
+            Value = ssn;
+        }
+
+        public static Result<SSN, Error> Create(string ssn)
         {
             if (!Regex.IsMatch(ssn, ssnPattern))
-                throw new ArgumentException("Value does not match the ssn pattern.");
+                return ValidationError.ParameterPatternError(nameof(ssn)); ;
+            
+            return new SSN(ssn);
+        }
 
-            Value = ssn;
+        public static SSN FromDB(string ssn)
+        {
+            return new SSN(ssn);
         }
     }
 }
