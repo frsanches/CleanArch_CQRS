@@ -6,6 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
         .AddRegister(builder.Configuration);
 
     // Add services to the container.
+    builder.Services.AddProblemDetails(ops =>
+        ops.CustomizeProblemDetails = (ctx) =>
+        {
+            if (ctx.ProblemDetails.Status == 500)
+                ctx.ProblemDetails.Detail = "An error occuered in our API";
+        }
+    );
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,6 +33,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseExceptionHandler();
 
 app.MapControllers();
 
