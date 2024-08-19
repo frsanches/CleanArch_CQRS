@@ -25,7 +25,7 @@ namespace Domain.Tests
 
             Assert.False(ssn.IsSuccess);
             Assert.IsType<Error>(ssn.Error);
-            Assert.NotEmpty(ssn.Error.message);
+            Assert.NotEmpty(ssn.Error.messages);
         }
     }
 }

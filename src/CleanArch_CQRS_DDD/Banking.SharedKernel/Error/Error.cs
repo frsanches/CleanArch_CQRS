@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace Banking.SharedKernel.Error
+﻿namespace Banking.SharedKernel.Error
 {
-    public record Error(HttpStatusCode statuscode, string message);
+    public record Error(ErrorCode errorCode, string[] messages);
 }

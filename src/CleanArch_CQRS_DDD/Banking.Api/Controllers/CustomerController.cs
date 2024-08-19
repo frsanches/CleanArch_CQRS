@@ -31,7 +31,7 @@ namespace Banking.Api.Controllers
             var result = await _commandHandler.HandleAsync(command);
 
             if (!result.IsSuccess)
-                return StatusCode((int)result.Error!.statuscode, result.Error.message);
+                return StatusCode((int)result.Error!.errorCode, result.Error.messages);
 
             return Ok(result.Value);
         }

@@ -1,5 +1,5 @@
 ﻿using Banking.Domain.Entities.Customers;
-using System.Net;
+using Banking.SharedKernel.Error;
 
 namespace Domain.Tests
 {
@@ -34,8 +34,8 @@ namespace Domain.Tests
             var customer = Customer.Create(firstName, lastName, email, ssn);
 
             Assert.False(customer.IsSuccess);
-            Assert.NotEmpty(customer.Error!.message);
-            Assert.Equal(HttpStatusCode.BadRequest, customer.Error.statuscode);
+            Assert.NotEmpty(customer.Error!.messages);
+            Assert.Equal(ErrorCode.BadRequest, customer.Error.errorCode);
         }
     }
 }
