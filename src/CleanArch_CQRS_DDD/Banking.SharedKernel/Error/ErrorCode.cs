@@ -2,6 +2,7 @@
 {
     public enum ErrorCode
     {
-        BadRequest = 400
+        BadRequest = 400,
+        NotFound = 404
     }
 }
