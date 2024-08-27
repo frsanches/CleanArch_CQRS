@@ -1,11 +1,14 @@
+using Banking.Api.Configuration;
 using Shared.Register;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    builder.Services
-        .AddRegister(builder.Configuration);
-
     // Add services to the container.
+
+    builder.Services
+        .AddRegister(builder.Configuration)
+        .AddTelemetry();
+
     builder.Services.AddProblemDetails(ops =>
         ops.CustomizeProblemDetails = (ctx) =>
         {
