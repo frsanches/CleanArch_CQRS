@@ -1,4 +1,5 @@
-﻿using Banking.Application.Features.Customers.Commands.CreateCustomer;
+﻿using Banking.Api.ApiLogs;
+using Banking.Application.Features.Customers.Commands.CreateCustomer;
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
 using Banking.Application.Utils;
@@ -14,13 +15,16 @@ namespace Banking.Api.Controllers
     {
         private readonly ICommandHandler<CreateCustomerCommand, Result<CreateCustomerResponse, Error>> _commandHandler;
         private readonly IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> _queryHandler;
+        private readonly ILogger<CustomersController> _logger;
 
         public CustomersController(
             ICommandHandler<CreateCustomerCommand, Result<CreateCustomerResponse, Error>> commandHandler,
-            IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler)
+            IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler,
+            ILogger<CustomersController> logger)
         {
             _commandHandler = commandHandler;
             _queryHandler = queryHandler;
+            _logger = logger;
         }
 
         [HttpGet("{customerId}")]
@@ -48,6 +52,8 @@ namespace Banking.Api.Controllers
 
             if (!result.IsSuccess)
                 return StatusCode((int)result.Error!.errorCode, result.Error.messages);
+
+            _logger.CustomerCreated(result.Value!);
 
             return Ok(result.Value);
         }

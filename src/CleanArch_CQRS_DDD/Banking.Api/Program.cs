@@ -1,4 +1,5 @@
 using Banking.Api.Configuration;
+using OpenTelemetry.Logs;
 using Shared.Register;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
     {
         logging.IncludeFormattedMessage = true;
         logging.IncludeScopes = true;
+
+        logging.AddOtlpExporter();
     });
 
     builder.Services.AddProblemDetails(ops =>
