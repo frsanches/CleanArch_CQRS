@@ -9,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
         .AddRegister(builder.Configuration)
         .AddTelemetry();
 
+    builder.Logging.AddOpenTelemetry(logging =>
+    {
+        logging.IncludeFormattedMessage = true;
+        logging.IncludeScopes = true;
+    });
+
     builder.Services.AddProblemDetails(ops =>
         ops.CustomizeProblemDetails = (ctx) =>
         {

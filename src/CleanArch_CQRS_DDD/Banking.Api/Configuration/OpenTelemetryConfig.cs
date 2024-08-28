@@ -12,7 +12,9 @@ namespace Banking.Api.Configuration
                 .ConfigureResource(resource => resource.AddService("Banking.Api"))
                 .WithMetrics(metrics =>
                 {
-                    metrics.AddAspNetCoreInstrumentation();
+                    metrics
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation();
 
                     metrics.AddOtlpExporter();
                 })
@@ -20,6 +22,7 @@ namespace Banking.Api.Configuration
                 {
                     tracing
                         .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation()
                         .AddEntityFrameworkCoreInstrumentation();
 
                     tracing.AddOtlpExporter();

@@ -25,11 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.Domain", "Banking.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.Persistence", "Banking.Persistence\Banking.Persistence.csproj", "{98750C5C-225F-4190-8729-FF6629FCB4EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.Persistence.IntegrationTests", "Banking.Persistence.IntegrationTests\Banking.Persistence.IntegrationTests.csproj", "{AFD62D57-2B4A-4D93-8659-E2E908BD6867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.Persistence.IntegrationTests", "Banking.Persistence.IntegrationTests\Banking.Persistence.IntegrationTests.csproj", "{AFD62D57-2B4A-4D93-8659-E2E908BD6867}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.SharedKernel", "Banking.SharedKernel\Banking.SharedKernel.csproj", "{D36D458E-4455-4A93-88CF-4D00D669568D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.SharedKernel", "Banking.SharedKernel\Banking.SharedKernel.csproj", "{D36D458E-4455-4A93-88CF-4D00D669568D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.Api", "Banking.Api\Banking.Api.csproj", "{4480988D-861F-40B9-8DB7-53BE946C40EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.Api", "Banking.Api\Banking.Api.csproj", "{4480988D-861F-40B9-8DB7-53BE946C40EE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{DE7C6E57-4FE5-472D-A30A-B77690C422E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{4480988D-861F-40B9-8DB7-53BE946C40EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4480988D-861F-40B9-8DB7-53BE946C40EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4480988D-861F-40B9-8DB7-53BE946C40EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE7C6E57-4FE5-472D-A30A-B77690C422E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7C6E57-4FE5-472D-A30A-B77690C422E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7C6E57-4FE5-472D-A30A-B77690C422E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7C6E57-4FE5-472D-A30A-B77690C422E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
