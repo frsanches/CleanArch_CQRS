@@ -2,6 +2,7 @@
 Repository containing a representation of Clean Architecture with some of known patterns like CQRS and Domain Driven Design in a .Net project.
 
 It consists of one ASP.NET Web API, the incoming requests go through the Application Core Pipeline for data validation using FluentValidation and Business Rule validation.
+
 EntityFramework is used as ORM with SqlLite in the Persistence Layer. 
 
 Logging, tracing and metrics are collected using OpenTelemetry auto instrumentation for .Net.
