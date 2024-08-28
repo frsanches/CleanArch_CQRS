@@ -11,4 +11,6 @@ Aspire dashboard to visualize OpenTelemetry data in the local environement.
 
 Unit test for the Domain layer and Intregation tests for the Persistence Layer. 
 
+The .NET application is containerized with Docker.
+
 ### Author - Francisco Sanches - [LinkedIn](https://fr.linkedin.com/in/francisco-sanches-319a7367)
