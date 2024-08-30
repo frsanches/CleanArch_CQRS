@@ -1,4 +1,5 @@
 ﻿using Banking.Api.ApiLogs;
+using Banking.Api.Idempotency;
 using Banking.Application.Features.Customers.Commands.CreateCustomer;
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
@@ -46,6 +47,7 @@ namespace Banking.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [TypeFilter(typeof(IdempotentActionFilter<CreateCustomerResponse>))]
         public async Task<ActionResult<CreateCustomerResponse>> AddCustomer(CreateCustomerCommand command)
         {
             var result = await _commandHandler.HandleAsync(command);
