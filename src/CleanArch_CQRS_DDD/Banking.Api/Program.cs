@@ -26,7 +26,12 @@ var builder = WebApplication.CreateBuilder(args);
         }
     );
 
-    builder.Services.AddDistributedMemoryCache();
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        var redis = builder.Configuration.GetConnectionString("Redis");
+
+        options.Configuration = redis;
+    });
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
