@@ -1,5 +1,4 @@
 ﻿using Banking.Api.ApiLogs;
-using Banking.Api.Idempotency;
 using Banking.Application.Features.Customers.Commands.CreateCustomer;
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
@@ -14,12 +13,12 @@ namespace Banking.Api.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ICommandHandler<CreateCustomerCommand, Result<CreateCustomerResponse, Error>> _commandHandler;
+        private readonly ICommandHandler<CreateCustomerCommand> _commandHandler;
         private readonly IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> _queryHandler;
         private readonly ILogger<CustomersController> _logger;
 
         public CustomersController(
-            ICommandHandler<CreateCustomerCommand, Result<CreateCustomerResponse, Error>> commandHandler,
+            ICommandHandler<CreateCustomerCommand> commandHandler,
             IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler,
             ILogger<CustomersController> logger)
         {
@@ -45,9 +44,8 @@ namespace Banking.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [TypeFilter(typeof(IdempotentActionFilter<CreateCustomerResponse>))]
         public async Task<ActionResult<CreateCustomerResponse>> AddCustomer(CreateCustomerCommand command)
         {
             var result = await _commandHandler.HandleAsync(command);
@@ -55,9 +53,11 @@ namespace Banking.Api.Controllers
             if (!result.IsSuccess)
                 return StatusCode((int)result.Error!.errorCode, result.Error.messages);
 
-            _logger.CustomerCreated(result.Value!);
+            var value = (CreateCustomerResponse)result.Value!;
 
-            return Ok(result.Value);
+            _logger.CustomerCreated(value);
+
+            return CreatedAtAction(nameof(GetCustomerById), new { customerId = value.Id }, value);
         }
     }
 }

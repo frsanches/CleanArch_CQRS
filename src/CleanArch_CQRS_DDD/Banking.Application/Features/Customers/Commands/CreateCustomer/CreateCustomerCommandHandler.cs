@@ -7,7 +7,7 @@ using Banking.SharedKernel.Response;
 
 namespace Banking.Application.Features.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, Result<CreateCustomerResponse, Error>>
+    public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand>
     {
         private readonly ICustomerRepository _customerRepository;
 
@@ -16,7 +16,7 @@ namespace Banking.Application.Features.Customers.Commands.CreateCustomer
             _customerRepository = customerRepository;
         }
 
-        public async Task<Result<CreateCustomerResponse, Error>> HandleAsync(CreateCustomerCommand command)
+        public async Task<Result<Value, Error>> HandleAsync(CreateCustomerCommand command)
         {
             var validator = new CreateCustomerCommandValidator();
             var validationResult = await validator.ValidateAsync(command);
