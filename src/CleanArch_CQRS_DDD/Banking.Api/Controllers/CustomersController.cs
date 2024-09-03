@@ -1,5 +1,4 @@
-﻿using Banking.Api.ApiLogs;
-using Banking.Application.Features.Customers.Commands.CreateCustomer;
+﻿using Banking.Application.Features.Customers.Commands.CreateCustomer;
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
 using Banking.Application.Utils;
@@ -15,16 +14,13 @@ namespace Banking.Api.Controllers
     {
         private readonly ICommandHandler<CreateCustomerCommand> _commandHandler;
         private readonly IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> _queryHandler;
-        private readonly ILogger<CustomersController> _logger;
 
         public CustomersController(
             ICommandHandler<CreateCustomerCommand> commandHandler,
-            IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler,
-            ILogger<CustomersController> logger)
+            IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler)
         {
             _commandHandler = commandHandler;
             _queryHandler = queryHandler;
-            _logger = logger;
         }
 
         [HttpGet("{customerId}")]
@@ -54,8 +50,6 @@ namespace Banking.Api.Controllers
                 return StatusCode((int)result.Error!.errorCode, result.Error.messages);
 
             var value = (CreateCustomerResponse)result.Value!;
-
-            _logger.CustomerCreated(value);
 
             return CreatedAtAction(nameof(GetCustomerById), new { customerId = value.Id }, value);
         }

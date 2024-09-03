@@ -9,6 +9,7 @@ using Banking.SharedKernel.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Banking.Application
 {
@@ -18,7 +19,9 @@ namespace Banking.Application
         {
             services.AddTransient<ICommandHandler<CreateCustomerCommand>>(x =>
                 new IdempotencyDecorator<CreateCustomerCommand, CreateCustomerResponse>(
-                    new CreateCustomerCommandHandler(x.GetService<ICustomerRepository>()!),
+                    new CreateCustomerCommandHandler(
+                        x.GetService<ICustomerRepository>()!,
+                        x.GetService<ILogger<CreateCustomerCommandHandler>>()!),
                     x.GetService<IDistributedCache>()!,
                     x.GetService<IHttpContextAccessor>()!
                    )
