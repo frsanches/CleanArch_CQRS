@@ -1,4 +1,5 @@
-﻿using Banking.Application.Features.Customers.Commands.CreateCustomer;
+﻿using Banking.Api.ModelMapping;
+using Banking.Application.Features.Customers.Commands.CreateCustomer;
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
 using Banking.Application.Utils;
@@ -52,11 +53,9 @@ namespace Banking.Api.Controllers
             if (!result.IsSuccess)
                 return StatusCode((int)result.Error!.errorCode, result.Error.messages);
 
-            var value = (CreateCustomerCommandResponse)result.Value!;
+            CreateCustomerResponse value = ((CreateCustomerCommandResponse)result.Value!).Convert();
 
-            var customerResponse = new CreateCustomerResponse(value.Id, value.FirstName, value.LastName, value.Email, value.SSN);
-
-            return CreatedAtAction(nameof(GetCustomerById), new { customerId = customerResponse.Id }, customerResponse);
+            return CreatedAtAction(nameof(GetCustomerById), new { customerId = value.Id }, value);
         }
     }
 }
