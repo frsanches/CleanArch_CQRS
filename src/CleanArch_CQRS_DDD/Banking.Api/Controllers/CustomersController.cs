@@ -2,6 +2,7 @@
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
 using Banking.Application.Utils;
+using Banking.Contracts.Customer;
 using Banking.SharedKernel.Error;
 using Banking.SharedKernel.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -42,16 +43,20 @@ namespace Banking.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CreateCustomerResponse>> AddCustomer(CreateCustomerCommand command)
+        public async Task<ActionResult<CreateCustomerResponse>> AddCustomer(CreateCustomerRequest request)
         {
+            var command = new CreateCustomerCommand(request.FirstName, request.LastName, request.Email, request.SSN);
+
             var result = await _commandHandler.HandleAsync(command);
 
             if (!result.IsSuccess)
                 return StatusCode((int)result.Error!.errorCode, result.Error.messages);
 
-            var value = (CreateCustomerResponse)result.Value!;
+            var value = (CreateCustomerCommandResponse)result.Value!;
 
-            return CreatedAtAction(nameof(GetCustomerById), new { customerId = value.Id }, value);
+            var customerResponse = new CreateCustomerResponse(value.Id, value.FirstName, value.LastName, value.Email, value.SSN);
+
+            return CreatedAtAction(nameof(GetCustomerById), new { customerId = customerResponse.Id }, customerResponse);
         }
     }
 }

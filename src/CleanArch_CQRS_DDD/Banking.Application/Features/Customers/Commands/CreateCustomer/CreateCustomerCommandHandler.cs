@@ -39,7 +39,7 @@ namespace Banking.Application.Features.Customers.Commands.CreateCustomer
 
             _logger.CustomerCreated(value);
 
-            return value;
+            return value!;
         }
     }
 }

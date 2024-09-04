@@ -18,7 +18,7 @@ namespace Banking.Application
             services.
                 Decorate<ICommandHandler<CreateCustomerCommand>>((inner) 
                         => new ValidationDecorator<CreateCustomerCommand>(inner, new CreateCustomerCommandValidator()))
-                .Decorate<ICommandHandler<CreateCustomerCommand>, IdempotencyDecorator<CreateCustomerCommand, CreateCustomerResponse>>();
+                .Decorate<ICommandHandler<CreateCustomerCommand>, IdempotencyDecorator<CreateCustomerCommand, CreateCustomerCommandResponse>>();
 
             services.AddTransient<IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>>, GetCustomerQueryHandler>();
 

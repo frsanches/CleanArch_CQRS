@@ -1,13 +1,8 @@
 ﻿using Banking.Application.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Banking.Application.Features.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerResponse : Value
+    public class CreateCustomerCommandResponse : Value
     {
         public string Id { get; init; } = string.Empty;
         public string FirstName { get; init; } = string.Empty;

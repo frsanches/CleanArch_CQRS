@@ -6,7 +6,7 @@ namespace Banking.Application.Mapping
 {
     internal static class CustomerExtension
     {
-        internal static CreateCustomerResponse Convert(this Customer customer)
+        internal static CreateCustomerCommandResponse Convert(this Customer customer)
         {
             return new()
             {

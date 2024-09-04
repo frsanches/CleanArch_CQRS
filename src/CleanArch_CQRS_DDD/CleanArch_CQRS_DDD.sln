@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.Api", "Banking.Api\
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{DE7C6E57-4FE5-472D-A30A-B77690C422E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.Contracts", "..\Banking.Contracts\Banking.Contracts.csproj", "{2D0F41A9-02A6-4F32-A2F9-2753197C46B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{DE7C6E57-4FE5-472D-A30A-B77690C422E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE7C6E57-4FE5-472D-A30A-B77690C422E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE7C6E57-4FE5-472D-A30A-B77690C422E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D0F41A9-02A6-4F32-A2F9-2753197C46B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D0F41A9-02A6-4F32-A2F9-2753197C46B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D0F41A9-02A6-4F32-A2F9-2753197C46B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D0F41A9-02A6-4F32-A2F9-2753197C46B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{AFD62D57-2B4A-4D93-8659-E2E908BD6867} = {1280D5FE-DA1C-4D00-A37D-58A5F9BC9936}
 		{D36D458E-4455-4A93-88CF-4D00D669568D} = {0AA30E49-AF51-4FAF-B9B7-59B2871A84AC}
 		{4480988D-861F-40B9-8DB7-53BE946C40EE} = {B9623C27-2E7A-4F42-9A5C-1860EB571D60}
+		{2D0F41A9-02A6-4F32-A2F9-2753197C46B8} = {B9623C27-2E7A-4F42-9A5C-1860EB571D60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A2F72A4-EA2A-44AF-8C2B-ED1E159C9FEC}
