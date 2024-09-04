@@ -1,4 +1,5 @@
-﻿using Banking.Api.ModelMapping;
+﻿using Banking.Api.ApiError;
+using Banking.Api.ModelMapping;
 using Banking.Application.Features.Customers.Commands.CreateCustomer;
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
@@ -51,7 +52,7 @@ namespace Banking.Api.Controllers
             var result = await _commandHandler.HandleAsync(command);
 
             if (!result.IsSuccess)
-                return StatusCode((int)result.Error!.errorCode, result.Error.messages);
+                return StatusCode((int)result.Error!.errorCode, result.Error.ToApiError());
 
             CreateCustomerResponse value = ((CreateCustomerCommandResponse)result.Value!).Convert();
 

@@ -31,7 +31,7 @@ namespace Banking.Application.Decorator
 
             if (string.IsNullOrWhiteSpace(idemPotencyHeader))
             {
-                return new Error(ErrorCode.BadRequest, ["X-Idempotency header was not set"]);
+                return new Error(ErrorCode.BadRequest, "The request is invalid.", ["X-Idempotency header was not set"]);
             }
 
             var value = await _distributedCache.GetAsync(idemPotencyHeader!);

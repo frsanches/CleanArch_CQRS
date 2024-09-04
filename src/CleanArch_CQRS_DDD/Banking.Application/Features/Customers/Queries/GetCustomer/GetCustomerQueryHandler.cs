@@ -19,7 +19,7 @@ namespace Banking.Application.Features.Customers.Queries.GetCustomer
         {
             if (!Guid.TryParse(query.CustomerId, out var customerId))
             {
-                var error = new Error(ErrorCode.BadRequest, [$"The value [{query.CustomerId}] is not a valid Customer Id"]);
+                var error = new Error(ErrorCode.BadRequest, "The request is invalid.", [$"The value [{query.CustomerId}] is not a valid Customer Id"]);
 
                 return error;
             }
@@ -28,7 +28,7 @@ namespace Banking.Application.Features.Customers.Queries.GetCustomer
 
             if (customer == null)
             {
-                return new Error(ErrorCode.NotFound, [$"Customer Id [{query.CustomerId}] was not found."]);
+                return new Error(ErrorCode.NotFound, "Ressource Not Found", [$"Customer Id [{query.CustomerId}] was not found."]);
             }
 
             return customer!.ConvertToDto();

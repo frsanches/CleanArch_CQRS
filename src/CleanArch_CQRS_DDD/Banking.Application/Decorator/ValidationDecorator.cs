@@ -25,7 +25,7 @@ namespace Banking.Application.Decorator
             if (!validationResult.IsValid)
             {
                 var errorMessages = validationResult.Errors.Select(p => p.ErrorMessage).ToArray();
-                var error = new Error(ErrorCode.BadRequest, errorMessages);
+                var error = new Error(ErrorCode.BadRequest, "The request is invalid.", errorMessages);
 
                 return error;
             }
