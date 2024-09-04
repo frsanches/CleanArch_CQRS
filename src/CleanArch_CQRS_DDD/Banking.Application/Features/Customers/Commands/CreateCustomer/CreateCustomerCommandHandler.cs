@@ -24,17 +24,6 @@ namespace Banking.Application.Features.Customers.Commands.CreateCustomer
 
         public async Task<Result<Value, Error>> HandleAsync(CreateCustomerCommand command)
         {
-            var validator = new CreateCustomerCommandValidator();
-            var validationResult = await validator.ValidateAsync(command);
-
-            if (!validationResult.IsValid) 
-            {
-                var errorMessages = validationResult.Errors.Select(p => p.ErrorMessage).ToArray();
-                var error = new Error(ErrorCode.BadRequest, errorMessages);
-
-                return error;
-            }
-
             var customer = Customer.Create(
                 firstName: command.FirstName,
                 command.LastName,

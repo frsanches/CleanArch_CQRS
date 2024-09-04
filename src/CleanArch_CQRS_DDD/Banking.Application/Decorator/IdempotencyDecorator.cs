@@ -3,7 +3,6 @@ using Banking.SharedKernel.Error;
 using Banking.SharedKernel.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Text.Json;
 
