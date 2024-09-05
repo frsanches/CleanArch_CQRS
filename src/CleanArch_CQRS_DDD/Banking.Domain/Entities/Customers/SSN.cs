@@ -1,6 +1,7 @@
 ﻿using Banking.Domain.Errors;
 using Banking.SharedKernel.Error;
 using Banking.SharedKernel.Response;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Banking.Domain.Entities.Customers
@@ -10,9 +11,10 @@ namespace Banking.Domain.Entities.Customers
         const string ssnPattern = @"^\d{3}-\d{2}-\d{4}$";
         public string Value { get; private set; }
 
-        private SSN(string ssn)
+        [JsonConstructor]
+        private SSN(string value)
         {
-            Value = ssn;
+            Value = value;
         }
 
         public static Result<SSN, Error> Create(string ssn)

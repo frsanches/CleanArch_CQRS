@@ -2,6 +2,7 @@
 using Banking.SharedKernel.Error;
 using Banking.SharedKernel.Response;
 using System.Runtime.Intrinsics.X86;
+using System.Text.Json.Serialization;
 
 namespace Banking.Domain.Entities.Customers
 {
@@ -13,18 +14,11 @@ namespace Banking.Domain.Entities.Customers
         public string Email { get; private set; }
         public SSN SSN { get; private set; }
 
-        private Customer(string firstName, string lastName, string email, SSN ssn)
+        // For json serialization
+        [JsonConstructor]
+        private Customer(Guid id, string firstName, string lastName, string email, SSN ssn)
         {
-            Id = Guid.NewGuid();
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            SSN = ssn;
-        }
-
-        private Customer(Guid customerId, string firstName, string lastName, string email, SSN ssn) 
-        {
-            Id = customerId;
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
@@ -43,7 +37,7 @@ namespace Banking.Domain.Entities.Customers
             if (!newSsn.IsSuccess)
                 return newSsn.Error!;
 
-            return new Customer(firstName, lastName, email, newSsn.Value);
+            return new Customer(Guid.NewGuid(), firstName, lastName, email, newSsn.Value);
         }
 
         public static Customer FromDB(Guid customerId, string firstName, string lastName, string email, string ssn)
