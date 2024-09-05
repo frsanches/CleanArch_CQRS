@@ -7,6 +7,8 @@ EntityFramework is used as ORM with SqlLite in the Persistence Layer.
 
 Logging, tracing and metrics are collected using OpenTelemetry auto instrumentation for .Net.
 
+Caching with Redis Cache and Idempotency support
+
 Aspire dashboard to visualize OpenTelemetry data in the local environement.
 
 Unit test for the Domain layer and Intregation tests for the Persistence Layer. 
