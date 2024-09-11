@@ -8,6 +8,7 @@ using Banking.Contracts.Customer;
 using Banking.SharedKernel.Error;
 using Banking.SharedKernel.Response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace Banking.Api.Controllers
 {
@@ -30,6 +31,7 @@ namespace Banking.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [OutputCache]
         public async Task<ActionResult<GetCustomerDto>> GetCustomerById(string customerId)
         {
             var customerQuery = new GetCustomerQuery { CustomerId = customerId };

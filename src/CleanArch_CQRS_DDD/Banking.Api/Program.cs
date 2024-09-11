@@ -33,6 +33,16 @@ var builder = WebApplication.CreateBuilder(args);
         options.Configuration = redis;
     });
 
+
+    builder.Services.AddOutputCache(options => options.DefaultExpirationTimeSpan = TimeSpan.FromMinutes(2));
+    
+    builder.Services.AddStackExchangeRedisOutputCache(options =>
+    {
+        var redis = builder.Configuration.GetConnectionString("Redis");
+        options.Configuration = redis;
+        options.InstanceName = "banking.redis";
+    });
+
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
     builder.Services.AddControllers();
@@ -52,6 +62,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseOutputCache();
 
 app.UseAuthorization();
 
