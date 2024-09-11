@@ -30,4 +30,8 @@
     <ProjectReference Include="..\Shared.Register\Shared.Register.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	 <InternalsVisibleTo Include="Banking.Api.IntegrationTests" />
+  </ItemGroup>
+
 </Project>
