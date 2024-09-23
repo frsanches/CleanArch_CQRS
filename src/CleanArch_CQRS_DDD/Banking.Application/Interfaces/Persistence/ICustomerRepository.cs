@@ -7,5 +7,7 @@ namespace Banking.Application.Interfaces
         Task AddAsync(Customer customer);
 
         Task<Customer?> GetByIdAsync(Guid id);
+
+        Task UpdateCustomerEmailAsync(Customer customer);
     }
 }

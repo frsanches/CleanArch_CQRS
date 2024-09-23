@@ -1,11 +1,8 @@
 ﻿using Banking.Application.Interfaces;
 using Banking.Domain.Entities.Customers;
 using Banking.Persistence.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Banking.Persistence.Repositories
 {
@@ -27,9 +24,17 @@ namespace Banking.Persistence.Repositories
 
         public async Task<Customer?> GetByIdAsync(Guid id)
         {
+            _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
             var dbCustomer = await _dbContext.Customers.FindAsync(id);
 
             return dbCustomer?.Convert();
+        }
+
+        public async Task UpdateCustomerEmailAsync(Customer customer)
+        {
+            await _dbContext.Customers.Where(x => x.CustomerId == customer.Id)
+                .ExecuteUpdateAsync(update => update.SetProperty(c => c.Email, customer.Email));
         }
     }
 }

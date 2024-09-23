@@ -1,7 +1,6 @@
 ﻿using Banking.Domain.Errors;
 using Banking.SharedKernel.Error;
 using Banking.SharedKernel.Response;
-using System.Runtime.Intrinsics.X86;
 using System.Text.Json.Serialization;
 
 namespace Banking.Domain.Entities.Customers
@@ -23,6 +22,15 @@ namespace Banking.Domain.Entities.Customers
             LastName = lastName;
             Email = email;
             SSN = ssn;
+        }
+
+        public Result<Customer, Error> ChangeEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email)) return ValidationError.ParameterError(nameof(email));
+
+            Email = email;
+
+            return this;
         }
 
         public static Result<Customer, Error> Create(string firstName, string lastName, string email, string ssn)

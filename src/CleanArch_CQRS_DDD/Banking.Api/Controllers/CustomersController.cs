@@ -1,5 +1,6 @@
 ﻿using Banking.Api.ApiError;
 using Banking.Api.ModelMapping;
+using Banking.Application.Features.Customers.Commands.ChangeCustomerEmail;
 using Banking.Application.Features.Customers.Commands.CreateCustomer;
 using Banking.Application.Features.Customers.Queries.GetCustomer;
 using Banking.Application.Models;
@@ -17,13 +18,16 @@ namespace Banking.Api.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICommandHandler<CreateCustomerCommand> _commandHandler;
+        private readonly ICommandHandler<ChangeCustomerEmailCommand> _updateCommandHandler;
         private readonly IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> _queryHandler;
 
         public CustomersController(
             ICommandHandler<CreateCustomerCommand> commandHandler,
+            ICommandHandler<ChangeCustomerEmailCommand> updateCommandHandler,
             IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler)
         {
             _commandHandler = commandHandler;
+            _updateCommandHandler = updateCommandHandler;
             _queryHandler = queryHandler;
         }
 
@@ -59,6 +63,22 @@ namespace Banking.Api.Controllers
             CreateCustomerResponse value = ((CreateCustomerCommandResponse)result.Value!).Convert();
 
             return CreatedAtAction(nameof(GetCustomerById), new { customerId = value.Id }, value);
+        }
+
+        [HttpPut("{customerId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<GetCustomerDto>> UpdateCustomerEmail(string customerId, UpdateCustomerEmailRequest request)
+        {
+            var customerCommand = new ChangeCustomerEmailCommand(customerId, request.Email);
+
+            var result = await _updateCommandHandler.HandleAsync(customerCommand);
+
+            if (!result.IsSuccess)
+                return StatusCode((int)result.Error!.errorCode, result.Error.messages);
+
+            return Ok(result.Value);
         }
     }
 }

@@ -48,5 +48,10 @@ namespace Banking.Persistence.Repositories
 
             return customer;
         }
+
+        public async Task UpdateCustomerEmailAsync(Customer customer)
+        {
+            await _customerRepository.UpdateCustomerEmailAsync(customer);
+        }
     }
 }

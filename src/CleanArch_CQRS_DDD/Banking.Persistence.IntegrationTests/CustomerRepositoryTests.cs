@@ -73,5 +73,45 @@ namespace Banking.Persistence.IntegrationTests
             Assert.Equal(expectedCustomer.Email, email);
             Assert.Equal(expectedCustomer.SSN.Value, ssn);
         }
+
+        // This test does not work when using InMemoryDatabase
+        [Fact]
+        public async Task Should_UpdateCustomerEmail_WhenCustomerExists()
+        {
+            // Arrange
+            var firstName = "John";
+            var lastName = "Doe";
+            var email = "john.doe@bank.com";
+            var ssn = "416-27-7825";
+
+            var customer = new CustomerTable
+            {
+                CustomerId = Guid.NewGuid(),
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                SSN = ssn
+            };
+
+            _dbContext.Customers.Add(customer);
+            _dbContext.SaveChanges();
+
+            var newEmail = "john.doe@banking.com";
+            var customerRepository = new CustomerRepository(_dbContext);
+            var expectedCustomer = await customerRepository.GetByIdAsync(customer.CustomerId);
+
+            // Act
+            expectedCustomer!.ChangeEmail(newEmail);
+
+            // Warning : The new EF extension method (ExecuteUpdate) only work on relational database
+            // If you want to add integration tests to CI pipeline, the InMemoryDatabase has some limitation
+            // Some features like ExecuteUpdate only work for relational db
+            await customerRepository.UpdateCustomerEmailAsync(expectedCustomer);
+
+            expectedCustomer = await customerRepository.GetByIdAsync(customer.CustomerId);
+
+            Assert.NotNull(expectedCustomer);
+            Assert.Equal(expectedCustomer.Email, newEmail);
+        }
     }
 }
