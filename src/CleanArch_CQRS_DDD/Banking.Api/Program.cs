@@ -1,6 +1,9 @@
 using Banking.Api.Configuration;
+using Banking.Persistence;
+using Microsoft.Extensions.Options;
 using OpenTelemetry.Logs;
 using Shared.Register;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -34,7 +37,18 @@ var builder = WebApplication.CreateBuilder(args);
     });
 
 
-    builder.Services.AddOutputCache(options => options.DefaultExpirationTimeSpan = TimeSpan.FromMinutes(2));
+    builder.Services.AddOutputCache(options =>
+    {
+        options.AddBasePolicy(x => x.NoCache());
+        options.DefaultExpirationTimeSpan = TimeSpan.FromMinutes(2);
+
+        options.AddPolicy("customer_cache", x =>
+        {
+            x.Cache();
+            x.Expire(TimeSpan.FromSeconds(60));
+            x.Tag("customer_tag");
+        });
+    });
     
     builder.Services.AddStackExchangeRedisOutputCache(options =>
     {
@@ -57,6 +71,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    var scope = app.Services.CreateScope();
+    var ctx = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    ctx.Database.EnsureCreated();
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }

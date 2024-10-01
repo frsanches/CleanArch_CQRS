@@ -20,22 +20,25 @@ namespace Banking.Api.Controllers
         private readonly ICommandHandler<CreateCustomerCommand> _commandHandler;
         private readonly ICommandHandler<ChangeCustomerEmailCommand> _updateCommandHandler;
         private readonly IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> _queryHandler;
+        private readonly IOutputCacheStore _outputCache;
 
         public CustomersController(
             ICommandHandler<CreateCustomerCommand> commandHandler,
             ICommandHandler<ChangeCustomerEmailCommand> updateCommandHandler,
-            IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler)
+            IQueryHandler<GetCustomerQuery, Result<GetCustomerDto, Error>> queryHandler,
+            IOutputCacheStore outputCache)
         {
             _commandHandler = commandHandler;
             _updateCommandHandler = updateCommandHandler;
             _queryHandler = queryHandler;
+            _outputCache = outputCache;
         }
 
         [HttpGet("{customerId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [OutputCache]
+        [OutputCache(PolicyName = "customer_cache")]
         public async Task<ActionResult<GetCustomerDto>> GetCustomerById(string customerId)
         {
             var customerQuery = new GetCustomerQuery { CustomerId = customerId };
@@ -77,6 +80,8 @@ namespace Banking.Api.Controllers
 
             if (!result.IsSuccess)
                 return StatusCode((int)result.Error!.errorCode, result.Error.messages);
+
+            await _outputCache.EvictByTagAsync("customer_tag", default);
 
             return Ok(result.Value);
         }

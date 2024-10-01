@@ -5,75 +5,91 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Banking.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240802181010_seeddata")]
-    partial class seeddata
+    [Migration("20241001100959_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Banking.Persistence.Entities.BankAccountTable", b =>
                 {
                     b.Property<Guid>("BankAccountId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid")
+                        .HasColumnName("bank_account_id");
 
                     b.Property<double>("Balance")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision")
+                        .HasColumnName("balance");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid")
+                        .HasColumnName("customer_id");
 
-                    b.HasKey("BankAccountId");
+                    b.HasKey("BankAccountId")
+                        .HasName("pk_bank_account");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .HasDatabaseName("ix_bank_account_customer_id");
 
                     b.ToTable("BankAccount", (string)null);
 
                     b.HasData(
                         new
                         {
-                            BankAccountId = new Guid("7aaa7cea-526a-4a4e-8a0b-daa180438421"),
+                            BankAccountId = new Guid("5363399b-6d9f-4552-9af5-d49df4d4ff23"),
                             Balance = 1000.0,
-                            CustomerId = new Guid("b8be3eeb-ed31-4a1e-b139-44bd2a8920b4")
+                            CustomerId = new Guid("ad6ba7eb-253c-42de-bc1d-313aebdb519c")
                         });
                 });
 
             modelBuilder.Entity("Banking.Persistence.Entities.CreditTransactionTable", b =>
                 {
                     b.Property<Guid>("CreditTransactionId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid")
+                        .HasColumnName("credit_transaction_id");
 
                     b.Property<double>("Amount")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision")
+                        .HasColumnName("amount");
 
                     b.Property<Guid>("BankAccountId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid")
+                        .HasColumnName("bank_account_id");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("description");
 
-                    b.HasKey("CreditTransactionId");
+                    b.HasKey("CreditTransactionId")
+                        .HasName("pk_credit_transaction");
 
-                    b.HasIndex("BankAccountId");
+                    b.HasIndex("BankAccountId")
+                        .HasDatabaseName("ix_credit_transaction_bank_account_id");
 
                     b.ToTable("CreditTransaction", (string)null);
 
                     b.HasData(
                         new
                         {
-                            CreditTransactionId = new Guid("fd842dfd-9fc3-4c72-b810-a1407c0b79ea"),
+                            CreditTransactionId = new Guid("0fd778c9-9200-4167-b6d8-8b9f21880aac"),
                             Amount = 1000.0,
-                            BankAccountId = new Guid("7aaa7cea-526a-4a4e-8a0b-daa180438421"),
+                            BankAccountId = new Guid("5363399b-6d9f-4552-9af5-d49df4d4ff23"),
                             Description = "Credit Transaction"
                         });
                 });
@@ -81,56 +97,74 @@ namespace Banking.Persistence.Migrations
             modelBuilder.Entity("Banking.Persistence.Entities.CustomerTable", b =>
                 {
                     b.Property<Guid>("CustomerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid")
+                        .HasColumnName("customer_id");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("last_name");
 
-                    b.HasKey("CustomerId");
+                    b.Property<string>("SSN")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)")
+                        .HasColumnName("ssn");
+
+                    b.HasKey("CustomerId")
+                        .HasName("pk_customer");
 
                     b.ToTable("Customer", (string)null);
 
                     b.HasData(
                         new
                         {
-                            CustomerId = new Guid("b8be3eeb-ed31-4a1e-b139-44bd2a8920b4"),
+                            CustomerId = new Guid("ad6ba7eb-253c-42de-bc1d-313aebdb519c"),
                             Email = "john.doe@banking.com",
                             FirstName = "John",
-                            LastName = "Doe"
+                            LastName = "Doe",
+                            SSN = "545-40-9491"
                         });
                 });
 
             modelBuilder.Entity("Banking.Persistence.Entities.DebitTransactionTable", b =>
                 {
                     b.Property<Guid>("DebitTransactionId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid")
+                        .HasColumnName("debit_transaction_id");
 
                     b.Property<double>("Amount")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision")
+                        .HasColumnName("amount");
 
                     b.Property<Guid>("BankAccountId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid")
+                        .HasColumnName("bank_account_id");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("description");
 
-                    b.HasKey("DebitTransactionId");
+                    b.HasKey("DebitTransactionId")
+                        .HasName("pk_debit_transaction");
 
-                    b.HasIndex("BankAccountId");
+                    b.HasIndex("BankAccountId")
+                        .HasDatabaseName("ix_debit_transaction_bank_account_id");
 
                     b.ToTable("DebitTransaction", (string)null);
                 });
@@ -141,7 +175,8 @@ namespace Banking.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_bank_account_customer_customer_id");
 
                     b.Navigation("Customer");
                 });
@@ -152,7 +187,8 @@ namespace Banking.Persistence.Migrations
                         .WithMany("CreditTransactions")
                         .HasForeignKey("BankAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_credit_transaction_bank_account_bank_account_id");
 
                     b.Navigation("BankAccount");
                 });
@@ -163,7 +199,8 @@ namespace Banking.Persistence.Migrations
                         .WithMany("DebitTransactions")
                         .HasForeignKey("BankAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_debit_transaction_bank_account_bank_account_id");
 
                     b.Navigation("BankAccount");
                 });

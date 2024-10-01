@@ -1,9 +1,11 @@
 ﻿using Banking.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
+using Testcontainers.PostgreSql;
 using Testcontainers.Redis;
 
 namespace Banking.Api.IntegrationTests.TestBase
@@ -13,6 +15,13 @@ namespace Banking.Api.IntegrationTests.TestBase
     {
         private readonly RedisContainer _redisContainer = new RedisBuilder()
             .WithImage("redis:latest")
+            .Build();
+
+        private readonly PostgreSqlContainer _postgresContainer = new PostgreSqlBuilder()
+            .WithImage("postgres:latest")
+            .WithDatabase("bankingtest")
+            .WithUsername("test")
+            .WithPassword("test")
             .Build();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -28,7 +37,10 @@ namespace Banking.Api.IntegrationTests.TestBase
 
                 services.AddDbContext<ApplicationDbContext>(options =>
                 {
-                    options.UseInMemoryDatabase("ApplicationDbContextTest");
+                    options
+                        .UseNpgsql(_postgresContainer.GetConnectionString())
+                        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                        .UseSnakeCaseNamingConvention();
                 });
 
                 var redisContextDescriptor = services
@@ -42,18 +54,32 @@ namespace Banking.Api.IntegrationTests.TestBase
                 {
                     options.Configuration = _redisContainer.GetConnectionString();
                 });
+
+                var outputCacheContextDescriptor = services
+                    .SingleOrDefault(d => d.ServiceType == typeof(OutputCacheOptions));
+
+                if (outputCacheContextDescriptor is not null)
+                    services.Remove(outputCacheContextDescriptor);
+
+                services.AddStackExchangeRedisOutputCache(options =>
+                {
+                    var redis = _redisContainer.GetConnectionString();
+                    options.Configuration = redis;
+                });
             });
 
             builder.UseEnvironment("Development");
         }
 
-        public Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            return _redisContainer.StartAsync();
+            await _redisContainer.StartAsync();
+            await _postgresContainer.StartAsync();
         }
-        public new Task DisposeAsync()
+        public new async Task DisposeAsync()
         {
-            return _redisContainer.StopAsync();
+            await _redisContainer.StopAsync();
+            await _postgresContainer.StopAsync();
         }
     }
 }

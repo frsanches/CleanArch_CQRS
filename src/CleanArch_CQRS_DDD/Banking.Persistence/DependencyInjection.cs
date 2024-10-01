@@ -12,7 +12,10 @@ namespace Banking.Persistence
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("Database"));
+                options
+                    .UseNpgsql(configuration.GetConnectionString("Database"))
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                    .UseSnakeCaseNamingConvention();
             });
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
