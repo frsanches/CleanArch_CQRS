@@ -19,7 +19,6 @@ namespace Banking.Persistence
             });
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.Decorate<ICustomerRepository, CachedCustomerRepository>();
             services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 
             return services;

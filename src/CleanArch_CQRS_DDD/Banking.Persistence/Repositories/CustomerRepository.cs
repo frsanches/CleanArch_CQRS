@@ -24,8 +24,6 @@ namespace Banking.Persistence.Repositories
 
         public async Task<Customer?> GetByIdAsync(Guid id)
         {
-            _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-
             var dbCustomer = await _dbContext.Customers.FindAsync(id);
 
             return dbCustomer?.Convert();

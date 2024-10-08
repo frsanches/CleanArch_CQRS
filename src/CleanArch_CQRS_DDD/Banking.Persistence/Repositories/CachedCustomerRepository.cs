@@ -6,6 +6,10 @@ using System.Text.Json;
 
 namespace Banking.Persistence.Repositories
 {
+    /* Microsoft does not recommend using IDistributedCache for use with output caching 
+     * because it doesn't have atomic features
+     * https://learn.microsoft.com/en-us/aspnet/core/performance/caching/output?view=aspnetcore-8.0
+     */
     internal class CachedCustomerRepository : ICustomerRepository
     {
         private readonly ICustomerRepository _customerRepository;
