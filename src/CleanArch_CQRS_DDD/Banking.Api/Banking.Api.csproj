@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Banking.Contracts\Banking.Contracts.csproj" />
     <ProjectReference Include="..\Banking.Application\Banking.Application.csproj" />
+    <ProjectReference Include="..\Banking.Contracts\Banking.Contracts.csproj" />
     <ProjectReference Include="..\Shared.Register\Shared.Register.csproj" />
   </ItemGroup>
 
